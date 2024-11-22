@@ -3,14 +3,12 @@ package com.codecrafter.hitect.controllers;
 import com.codecrafter.hitect.entities.Product;
 import com.codecrafter.hitect.entities.SubCategory;
 import com.codecrafter.hitect.entities.SubMainCategory;
+import com.codecrafter.hitect.entities.dtos.ProductDto;
 import com.codecrafter.hitect.services.IProductService;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -21,6 +19,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProductController {
 
     private final IProductService productService;
@@ -39,6 +38,17 @@ public class ProductController {
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(500).body("Error uploading product or images: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/getProducts")
+    public ResponseEntity<?> getProducts() {
+        try {
+            List<ProductDto> products = productService.getAllProducts();
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(500).body("Error getting products: " + e.getMessage());
         }
     }
 }

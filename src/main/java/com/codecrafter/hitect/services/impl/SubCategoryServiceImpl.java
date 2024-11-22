@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,10 @@ public class SubCategoryServiceImpl implements ISubCategoryService {
     public SubCategory addSubCategory(SubCategory subCategory) {
         subCategory.setSubCategoryAddedDate(LocalDate.now());
         return subCategoryRepository.save(subCategory);
+    }
+
+    @Override
+    public List<SubCategory> getSubCategories() {
+        return subCategoryRepository.findAll();
     }
 }

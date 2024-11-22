@@ -5,6 +5,7 @@ import com.codecrafter.hitect.entities.ImageDetails;
 import com.codecrafter.hitect.entities.Product;
 import com.codecrafter.hitect.entities.SubCategory;
 import com.codecrafter.hitect.entities.SubMainCategory;
+import com.codecrafter.hitect.entities.dtos.ProductDto;
 import com.codecrafter.hitect.repositories.IImageDetailsRepository;
 import com.codecrafter.hitect.repositories.IProductRepository;
 import com.codecrafter.hitect.services.IProductService;
@@ -83,6 +84,25 @@ public class ProductServiceImpl implements IProductService {
         response.put("imageUrls", imageUrls);
 
         return response;
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto();
+            productDto.setProductId(product.getProductId());
+            productDto.setProductName(product.getProductName());
+            List<String> imageUrls = new ArrayList<>();
+            List<ImageDetails> imageDetails = imageDetailsRepository.findAllByProduct(product);
+            for (ImageDetails imageDetail : imageDetails) {
+                imageUrls.add(imageDetail.getImageName());
+            }
+            productDto.setImageUrls(imageUrls);
+            productDtos.add(productDto);
+        }
+        return productDtos;
     }
 
 

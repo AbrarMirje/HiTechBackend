@@ -15,21 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "submaincategories")
-public class SubMainCategory {
+@Table(name = "subcategories")
+public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subMainCategoryId;
-    private String subMainCategoryName;
-    private LocalDate subMainCategoryAddedDate;
+    private Long subCategoryId;
+    private String subCategoryName;
+    private LocalDate subCategoryAddedDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "mainCategoryId")
-    private MainCategory mainCategory;
+    @ManyToOne(cascade = AllArgsConstructor)
+    @JoinColumn(name = "subMainCategoryId")
+    private SubMainCategory subMainCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subMainCategory", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Product> products;
-
-
 }

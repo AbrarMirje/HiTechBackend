@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,11 @@ public class MainCategoryServiceImpl implements IMainCategoryService {
     public MainCategory addMainCategory(MainCategory mainCategory) {
         mainCategory.setMainCategoryAddedDate(LocalDate.now());
         return mainCategoryRepository.save(mainCategory);
+    }
+
+    @Override
+    public List<MainCategory> getAllMainCategories() {
+        return mainCategoryRepository.findAll();
     }
 
 

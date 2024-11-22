@@ -1,5 +1,6 @@
 package com.codecrafter.hitect.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,10 +23,11 @@ public class SubCategory {
     private String subCategoryName;
     private LocalDate subCategoryAddedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subMainCategoryId")
     private SubMainCategory subMainCategory;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Product> products;
 }
